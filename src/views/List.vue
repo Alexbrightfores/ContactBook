@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <button type="button" class="btn btn-success addButton" @click="addClick">
-      Add
+      +
     </button>
     <UserAllList />
   </div>
@@ -27,7 +27,7 @@ export default {
 </script>
 <style>
 .addButton {
-  margin-left:22vw;
+  margin-left:37vw;
   margin-bottom: 30px;
 }
 </style>

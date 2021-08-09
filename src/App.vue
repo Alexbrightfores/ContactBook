@@ -1,6 +1,5 @@
 <template>
     <div id="nav">
-      <h1>Contact Book</h1>
       <router-view></router-view>
     </div>
 </template>

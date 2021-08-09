@@ -17,17 +17,17 @@ const store = createStore({
   },
   actions: {
     async fetchUsers({ commit }) {
-        await fb.usersCollection.orderBy('firstname', 'asc').onSnapshot(snapshot => {
-          let postsArray = []
-          snapshot.forEach(doc => {
-            console.log(doc.id)
-            let data = {
-              id: doc.id
-            }
-            postsArray.push({ ...data, ...doc.data() });
-          })
-          store.commit('setUsers', postsArray)
+      await fb.usersCollection.orderBy('firstname', 'asc').onSnapshot(snapshot => {
+        let postsArray = []
+        snapshot.forEach(doc => {
+          console.log(doc.id)
+          let data = {
+            id: doc.id
+          }
+          postsArray.push({ ...data, ...doc.data() });
         })
+        store.commit('setUsers', postsArray)
+      })
     },
     async createUser({ state, commit }, data) {
       // create post in firebase
@@ -35,7 +35,11 @@ const store = createStore({
         firstname: data.firstname,
         lastname: data.lastname,
         email: data.email,
-        status: data.status
+        phone: data.phone,
+        street: data.street,
+        city: data.city,
+        state: data.state,
+        postal: data.postal
       })
     },
     async deleteUser({ state, commit }, id) {
@@ -48,10 +52,15 @@ const store = createStore({
     },
     async editUser({ state, commit }, data) {
       // create post in firebase
-     await fb.usersCollection.doc(data.id).update({
+      await fb.usersCollection.doc(data.id).update({
         firstname: data.firstname,
         lastname: data.lastname,
-        email: data.email
+        email: data.email,
+        phone: data.phone,
+        street: data.street,
+        city: data.city,
+        state: data.state,
+        postal: data.postal
       })
     },
     async searchUser({ state, commit }, name) {
@@ -67,7 +76,7 @@ const store = createStore({
             if ((doc.data().firstname.search(name) !== -1 || doc.data().lastname.search(name) !== -1) && name !== '') {
               users.push({ ...data, ...doc.data() });
             }
-            else if(name === '') {
+            else if (name === '') {
               users.push({ ...data, ...doc.data() });
             }
           });

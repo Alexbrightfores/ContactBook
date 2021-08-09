@@ -2,6 +2,7 @@
   <div class="list">
     <table class="table table-bordered table-hover overstyle">
       <tbody>
+        <h1>Contacts</h1>
         <tr class="search">
           <input
             class="form-control"
@@ -12,8 +13,8 @@
           />
         </tr>
         <tr v-for="(userlist, index) in users" :key="index">
-          <td @click="editClick(userlist)">
-            {{ userlist.firstname }} {{ userlist.lastname }}
+          <td @click="detailClick(userlist)">
+            <h1>{{ userlist.firstname }} {{ userlist.lastname }}</h1>
           </td>
         </tr>
       </tbody>
@@ -36,10 +37,10 @@ export default {
     },
   },
   methods: {
-    editClick: function (user) {
+    detailClick: function (user) {
       console.log(user);
       this.$store.commit("setSelectId", user.id);
-      router.push("/edit");
+      router.push("/detail");
     },
     deleteClick: function (id) {
       console.log("event");
@@ -59,7 +60,7 @@ export default {
   justify-content: center;
 }
 .overstyle {
-  width: 500px;
+  width: 700px;
 }
 .search {
   margin-top: 20px;

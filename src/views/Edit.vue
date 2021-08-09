@@ -1,56 +1,102 @@
 <template>
-  <form class="row g-3">
-    <div class="col-md-12">
-      <button
-        type="submit"
-        class="btn btn-danger custombutton"
-        @click="deleteClick"
-      >
-        Delete
-      </button>
+  <div class="add-contact">
+    <div class="add-contact-block">
+      <button class="btn btn-info btn-contact" @click="contactClick">&#8918;Contacts</button>
+      <h1>Edit Contact</h1>
+      <div class="add-form">
+        <form class="row g-3">
+          <div class="col-md-6 form-input">
+            <input
+              type="text"
+              :value="firstname"
+              class="form-control"
+              id="inputEmail4"
+              @change="changefirst"
+              placeholder="First Name"
+            />
+          </div>
+          <div class="col-md-6 form-input">
+            <input
+              type="text"
+              :value="lastname"
+              class="form-control"
+              id="inputPassword4"
+              @change="changelast"
+              placeholder="Last Name"
+            />
+          </div>
+          <div class="col-md-6 form-input">
+            <input
+              type="email"
+              :value="email"
+              class="form-control"
+              id="inputAddress"
+              @change="changeemail"
+              placeholder="Email"
+            />
+          </div>
+          <div class="col-md-6 form-input">
+            <input
+              type="text"
+              class="form-control"
+              id="inputAddress"
+              :value="phone"
+              @change="changephone"
+              placeholder="Phone"
+            />
+          </div>
+          <div class="col-12 form-input">
+            <input
+              type="text"
+              class="form-control"
+              id="inputAddress2"
+              :value="street"
+              @change="changestreet"
+              placeholder="Street"
+            />
+          </div>
+          <div class="col-md-4 form-input">
+            <input
+              type="text"
+              class="form-control"
+              :value="city"
+              @change="changecity"
+              placeholder="City"
+              id="inputCity"
+            />
+          </div>
+          <div class="col-md-4 form-input">
+            <input
+              type="text"
+              class="form-control"
+              :value="state"
+              @change="changestate"
+              placeholder="Province/State"
+              id="inputZip"
+            />
+          </div>
+          <div class="col-md-4 form-input">
+            <input
+              type="text"
+              class="form-control"
+              :value="postal"
+              @change="changepostal"
+              placeholder="Postal/Zip"
+              id="inputZip"
+            />
+          </div>
+          <div class="col-6 form-input">
+            <button @click="editClick" class="btn btn-primary">
+              Edit
+            </button>
+          </div>
+          <div class="col-6 form-input">
+            <button class="btn btn-danger" @click="deleteClick">Delete</button>
+          </div>
+        </form>
+      </div>
     </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <label for="inputFirst" class="form-label">first name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="inputFirst"
-        @change="changefirst"
-        :value="firstname"
-      />
-    </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <label for="inputLast" class="form-label">last name</label>
-      <input
-        type="text"
-        class="form-control"
-        id="inputLast"
-        @change="changelast"
-        :value="lastname"
-      />
-    </div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4"></div>
-    <div class="col-md-4">
-      <label for="inputEmail4" class="form-label">Email</label>
-      <input
-        type="email"
-        class="form-control"
-        id="inputEmail4"
-        @change="changeemail"
-        :value="email"
-      />
-    </div>
-    <div class="col-md-4"></div>
-    <div class="col-12">
-      <button type="submit" class="btn btn-primary" @click="editClick">
-        Edit
-      </button>
-    </div>
-  </form>
+  </div>
 </template>
 <script>
 // @ is an alias to /src
@@ -62,6 +108,11 @@ export default {
       firstname: "",
       lastname: "",
       email: "",
+      phone: "",
+      street: "",
+      city: "",
+      state: "",
+      postal: "",
     };
   },
   mounted() {
@@ -71,6 +122,11 @@ export default {
         this.firstname = element.firstname;
         this.lastname = element.lastname;
         this.email = element.email;
+        this.phone = element.phone;
+        this.street = element.street;
+        this.city = element.city;
+        this.state = element.state;
+        this.postal = element.postal;
       }
     });
   },
@@ -82,8 +138,21 @@ export default {
         firstname: this.firstname,
         lastname: this.lastname,
         email: this.email,
+        phone: this.phone,
+        street: this.street,
+        city: this.city,
+        state: this.state,
+        postal: this.postal,
       };
       this.$store.dispatch("editUser", data);
+      router.push("/");
+    },
+    deleteClick: function () {
+      console.log("event");
+      this.$store.dispatch("deleteUser", this.$store.state.selectId);
+      router.push("/");
+    },
+    contactClick: function () {
       router.push("/");
     },
     changelast: function (event) {
@@ -95,17 +164,41 @@ export default {
     changeemail: function (event) {
       this.email = event.currentTarget.value;
     },
-    deleteClick: function () {
-      console.log("event");
-      this.$store.dispatch("deleteUser", this.$store.state.selectId);
-      router.push("/");
+    changephone: function (event) {
+      this.phone = event.currentTarget.value;
+    },
+    changestreet: function (event) {
+      this.street = event.currentTarget.value;
+    },
+    changecity: function (event) {
+      this.city = event.currentTarget.value;
+    },
+    changestate: function (event) {
+      this.state = event.currentTarget.value;
+    },
+    changepostal: function (event) {
+      this.postal = event.currentTarget.value;
     },
   },
 };
 </script>
 <style scoped>
-.custombutton {
+.add-form {
+  border: black 1px;
+  width: 60vw;
+}
+.add-contact {
+  display: flex;
+  justify-content: center;
+}
+.add-contact-block {
+  display: flex;
+  flex-direction: column;
+}
+.form-input {
+  margin-top: 30px !important;
+}
+.btn-contact {
   width: 100px;
-  margin-left: 300px;
 }
 </style>

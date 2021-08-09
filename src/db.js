@@ -1,14 +1,14 @@
-import  firebase from 'firebase'
+import firebase from 'firebase'
 import 'firebase/firestore'
 
 // firebase init
 const firebaseConfig = {
-  apiKey: "AIzaSyBbFHZIEyAF6reEpZbEKufdJ2Ocu3Hletw",
-  authDomain: "contactdb-ca713.firebaseapp.com",
-  projectId: "contactdb-ca713",
-  storageBucket: "contactdb-ca713.appspot.com",
-  messagingSenderId: "678932622300",
-  appId: "1:678932622300:web:df1d841da87f6f65d4fd19"
+  apiKey: "AIzaSyCrkAD1mxJFD8ifUBfxBly6GM0JOU6atUA",
+  authDomain: "contactbooks-c0301.firebaseapp.com",
+  projectId: "contactbooks-c0301",
+  storageBucket: "contactbooks-c0301.appspot.com",
+  messagingSenderId: "103939166440",
+  appId: "1:103939166440:web:91242d8e7b90fe203bb95d"
 }
 firebase.initializeApp(firebaseConfig)
 

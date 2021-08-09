@@ -1,15 +1,6 @@
 <template>
   <div class="list">
     <table class="table table-hover overstyle">
-      <thead>
-        <tr>
-          <th>Firstname</th>
-          <th>Lastname</th>
-          <th>Email</th>
-          <th>Edit</th>
-          <th>Delete</th>
-        </tr>
-      </thead>
       <tbody>
         <tr v-for="(userlist, index) in users" :key="index">
           <td>{{ userlist.firstname }}</td>
@@ -94,6 +85,6 @@ export default {
   justify-content: center;
 }
 .overstyle {
-  width: 60vw;
+  width: 70vw;
 }
 </style>
