@@ -28,7 +28,7 @@ export default {
     return {};
   },
   mounted() {
-    this.$store.dispatch("fetchUserProfile");
+    this.$store.dispatch("fetchUsers");
   },
   computed: {
     users() {

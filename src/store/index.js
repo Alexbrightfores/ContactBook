@@ -1,16 +1,6 @@
 import { createStore } from 'vuex'
-import * as fb from '../firebase'
+import * as fb from '../db'
 // Create a new store instance.
-fb.usersCollection.orderBy('firstname', 'asc').onSnapshot(snapshot => {
-  let postsArray = []
-
-  snapshot.forEach(doc => {
-    let post = doc.data()
-    postsArray.push(post)
-  })
-
-  store.commit('setUsers', postsArray)
-})
 const store = createStore({
   state: {
     users: [],
@@ -26,20 +16,18 @@ const store = createStore({
     }
   },
   actions: {
-    async fetchUserProfile({ commit }) {
-      // fetch user profile
-      const events = await fb.usersCollection.get()
-        .then(querySnapshot => {
-          let users = [];
-          querySnapshot.docs.map(doc => {
+    async fetchUsers({ commit }) {
+        await fb.usersCollection.orderBy('firstname', 'asc').onSnapshot(snapshot => {
+          let postsArray = []
+          snapshot.forEach(doc => {
             console.log(doc.id)
             let data = {
               id: doc.id
             }
-            users.push({ ...data, ...doc.data() });
-          });
-          commit('setUsers', users)
-        });
+            postsArray.push({ ...data, ...doc.data() });
+          })
+          store.commit('setUsers', postsArray)
+        })
     },
     async createUser({ state, commit }, data) {
       // create post in firebase
@@ -53,18 +41,7 @@ const store = createStore({
     async deleteUser({ state, commit }, id) {
       // create post in firebase
       await fb.usersCollection.doc(id).delete().then(() => {
-        const events = fb.usersCollection.get()
-          .then(querySnapshot => {
-            let users = [];
-            querySnapshot.docs.map(doc => {
-              console.log(doc.id)
-              let data = {
-                id: doc.id
-              }
-              users.push({ ...data, ...doc.data() });
-            });
-            commit('setUsers', users)
-          });
+        console.log('Success');
       }).catch((error) => {
         console.error("Error removing document: ", error);
       });
@@ -75,19 +52,6 @@ const store = createStore({
         firstname: data.firstname,
         lastname: data.lastname,
         email: data.email
-      }).then(() => {
-        const events = fb.usersCollection.get()
-          .then(querySnapshot => {
-            let users = [];
-            querySnapshot.docs.map(doc => {
-              console.log(doc.id)
-              let data = {
-                id: doc.id
-              }
-              users.push({ ...data, ...doc.data() });
-            });
-            commit('setUsers', users)
-          });
       })
     },
     async searchUser({ state, commit }, name) {
